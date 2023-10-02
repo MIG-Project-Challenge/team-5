@@ -2,6 +2,9 @@
     <a href="https://www.michiganinvestmentgroup.com/"><img src="./media/logo.jpeg"></a>
 </div>
 
+# NOTE!
+This repo will likely be more updated than your team repo with demo code so check back here for more examples and starter code!
+
 # Project Challenge 1
 
 - [Competition Spec](https://docs.google.com/document/d/1aBTDQckRDnt5PEU_qzmjxsmGURQZOdF2RPsreJY_voY/edit?usp=sharing)
