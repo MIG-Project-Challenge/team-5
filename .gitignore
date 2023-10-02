@@ -163,3 +163,5 @@ cython_debug/
 
 # avoid commiting any csv files
 *.csv
+
+*.DS_Store
