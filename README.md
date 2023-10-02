@@ -8,6 +8,8 @@
 - [Piazza](https://piazza.com/umich/fall2023/mig101)
 - [Algorithm Report turn in link](https://forms.gle/Ac4UJxsYPdErdtdC7)
 
+You can download the train data here [Google Drive Link](https://drive.google.com/file/d/1ruCDFeUqLEkPDfSLBqDMf8swyU1ECEwq/view?usp=sharing)
+
 ## Sections
 [About This Repo](#about)
 
