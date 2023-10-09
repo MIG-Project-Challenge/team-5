@@ -162,6 +162,6 @@ cython_debug/
 .vscode/*
 
 # avoid commiting any csv files
-*.csv
+test_data_50.csv
 
 *.DS_Store
