@@ -11,7 +11,7 @@ This repo will likely be more updated than your team repo with demo code so chec
 - [Piazza](https://piazza.com/umich/fall2023/mig101)
 - [Algorithm Report turn in link](https://forms.gle/Ac4UJxsYPdErdtdC7)
 
-You can download the train data here [Google Drive Link](https://drive.google.com/file/d/1B9IwUkGqZ3pmXCfJEjLSzid7MiNTLygZ/view?usp=sharing)
+You can download the train data here [Google Drive Link](https://drive.google.com/file/d/1_0tgLYUBpAr1-8PDMhwIgQ2XLLfo5lMU/view?usp=sharing)
 ## Sections
 [About This Repo](#about)
 
