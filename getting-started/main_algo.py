@@ -11,7 +11,7 @@ import pandas as pd
 from pathlib import Path
 import argparse
 import numpy as np
-import talib as ta # see https://github.com/TA-Lib/ta-lib-python
+import ta as ta
 
 
 # Read the data from the csv file
@@ -43,7 +43,7 @@ def pricesToNumpyArray(df, col="Open"):
     return prices
 
 class Algo:
-    def __init__(self, data_path, cash=25000, slowSMA=40, fastSMA=5):
+    def __init__(self, data_path, cash=25000, slowEMA=40, fastEMA=8):
         self.df = readData(data_path)
         self.open_prices = pricesToNumpyArray(self.df, col="Open")
         self.trades = np.zeros(self.open_prices.shape)
@@ -57,20 +57,24 @@ class Algo:
         self.port_values[0] = self.cash
 
         # Algo specific
-        self.slowSMA = slowSMA
-        self.fastSMA = fastSMA
+        self.slowEMA = slowEMA
+        self.fastEMA = fastEMA
 
     def runSMA(self):
         # calculate trades based off of SMA momentum strategy
 
-        # first calculate the SMAs
-        fast_smas = []
-        slow_smas = []
-        for stock in range(len(self.open_prices)): 
-            fast_sma = ta.SMA(self.open_prices[stock], timeperiod=self.fastSMA)
-            slow_sma = ta.SMA(self.open_prices[stock], timeperiod=self.slowSMA)
-            fast_smas.append(fast_sma)
-            slow_smas.append(slow_sma)
+        fast_emas = []
+        for time_series in self.open_prices:
+            series = pd.Series(time_series)
+            ema = ta.trend.EMAIndicator(series, self.fastEMA).ema_indicator()
+            fast_emas.append(ema)
+
+        slow_emas = []
+        for time_series in self.open_prices:
+            series = pd.Series(time_series)
+            ema = ta.trend.EMAIndicator(series, self.slowEMA).ema_indicator()
+            slow_emas.append(ema)
+       
 
         # now calculate trades
         for day in range(1, len(self.open_prices[0])-1):
@@ -78,17 +82,17 @@ class Algo:
 
             # loop through each stock for the given day
             for stock in range(len(self.open_prices)): 
-                fast_sma = fast_smas[stock]
-                slow_sma = slow_smas[stock]
+                fast_ema = fast_emas[stock]
+                slow_ema = slow_emas[stock]
 
                 # Buy: fast SMA crosses above slow SMA
-                if fast_sma[day] > slow_sma[day] and fast_sma[day-1] <= slow_sma[day-1]:
+                if fast_ema[day] > slow_ema[day] and fast_ema[day-1] <= slow_ema[day-1]:
                     # we are trading the next day's open price
                     self.trades[stock][day+1] = 1
                     self.handleBuy(stock, day+1, 1)
                 
                 # Sell/short: fast SMA crosses below slow SMA
-                elif fast_sma[day] < slow_sma[day] and fast_sma[day-1] >= slow_sma[day-1]:
+                elif fast_ema[day] < slow_ema[day] and fast_ema[day-1] >= slow_ema[day-1]:
                     # we are trading the next day's open price
                     self.trades[stock][day+1] = -1
                     self.handleSell(stock, day+1, 1)
